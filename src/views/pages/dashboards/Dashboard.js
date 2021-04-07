@@ -493,53 +493,6 @@ function Dashboard(props) {
               </div>
             </Row>
             <div className="card-deck">
-              {/*  <Card className="bg-gradient-default">
-                <CardBody>
-                  <div className="mb-2">
-                    <sup className="text-white">$</sup>{" "}
-                    <span className="h2 text-white">3,300</span>
-                    <div className="text-light mt-2 text-sm">
-                      Your current balance
-                    </div>
-                    <div>
-                      <span className="text-success font-weight-600">
-                        + 15%
-                      </span>{" "}
-                      <span className="text-light">($250)</span>
-                    </div>
-                  </div>
-                  <Button
-                    block
-                    className="btn-neutral"
-                    color="default"
-                    size="sm"
-                  >
-                    Add credit
-                  </Button>
-                </CardBody>
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <small className="text-light">Orders: 60%</small>
-                      <Progress
-                        className="progress-xs my-2"
-                        max="100"
-                        value="60"
-                        color="success"
-                      />
-                    </div>
-                    <div className="col">
-                      <small className="text-light">Sales: 40%</small>
-                      <Progress
-                        className="progress-xs my-2"
-                        max="100"
-                        value="40"
-                        color="warning"
-                      />
-                    </div>
-                  </Row>
-                </CardBody>
-              </Card> */}
 
             </div>
           </Col>

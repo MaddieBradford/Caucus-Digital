@@ -95,6 +95,24 @@ const routes = [
             layout: "/auth",
             muted: true
           },
+                {
+        path: "/sortable",
+        name: "Benchmark",
+        miniName: "S",
+        icon: "ni ni-chart-bar-32 text-primary",
+        component: Sortable,
+        layout: "/admin",
+        muted: false
+      },
+      {
+        path: "/react-bs-table",
+        name: "Search",
+        miniName: "RBT",
+        icon: "ni ni-chart-bar-32 text-primary",
+        component: ReactBSTables,
+        layout: "/admin",
+        muted: false
+      },
   // {
   //   collapse: true,
   //   name: "Examples",

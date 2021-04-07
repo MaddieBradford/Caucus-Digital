@@ -1134,7 +1134,7 @@ function Widgets() {
                     <div className="checklist-item checklist-item-success checklist-item-checked">
                       <div className="checklist-info">
                         <h5 className="checklist-title mb-0">
-                          Dinner with Family
+                          Dinner with Family4
                         </h5>
                         <small>10:30 AM</small>
                       </div>
