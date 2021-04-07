@@ -1,0 +1,124 @@
+<!--
+/*!
+
+=========================================================
+* Argon Dashboard PRO React - v1.2.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="perfect-scrollbar-off nav-open">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#000000" />
+  <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="shortcut icon" href="/favicon.png" />
+ <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
+ <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE"></script>
+  <title>Caucus Analytics</title>
+
+  
+
+
+
+
+
+
+<body class="g-sidenav-show g-sidenav-pinned">
+  <noscript> You need to enable JavaScript to run this app. </noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+  <div id="fb-root"></div>
+  <div id="fb-root2"></div>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+
+
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA3S6G0FJy5qCovuRMFuTfzpvRqg3yxwxY",
+    authDomain: "caucus-17dce.firebaseapp.com",
+    projectId: "caucus-17dce",
+    storageBucket: "caucus-17dce.appspot.com",
+    messagingSenderId: "398082497668",
+    appId: "1:398082497668:web:cb111790ec85b9ceb4b6d1",
+    measurementId: "G-8HF9VCWGDM"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  firebase.auth();
+</script>
+
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0&appId=1409144662771159&autoLogAppEvents=1"
+    nonce="GUfxqMoW"></script>
+
+
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '919318788871077',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v10.0'
+      });
+    };
+
+  </script>
+
+</body>
+
+
+
+
+</html>
