@@ -85,7 +85,7 @@ const clock = (15 - 24)
 const firebase = window.firebase;
 
 function Alternative(props) {
-  const { impressions, newfollows, engagement, postcomment, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
+  const { impressions, newfollows, engagement, postcomment, postcoommentlikes, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
   const [wordss, setWordss] = React.useState({});
   const [posticon, setposticon] = useState([]);
   const newWords = Object.entries(wordss).map(([k, v]) => ({ text: k, value: v }));
@@ -158,7 +158,7 @@ if (posts[0]?.icon?.includes('photo')) {
 
   return (
     <>
-      <AlternativeHeader comments={comments} impressions={impressions} postcomment={postcomment} newfollows={newfollows} engagement={engagement} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} pagename={pagename} name="Social2 Dashboard" parentName="Caucus" />
+      <AlternativeHeader comments={comments} impressions={impressions} postcoommentlikes={postcoommentlikes} postcomment={postcomment} newfollows={newfollows} engagement={engagement} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} pagename={pagename} name="Social2 Dashboard" parentName="Caucus" />
       
       <Container className="mt--6" fluid>
         
@@ -393,11 +393,11 @@ if (posts[0]?.icon?.includes('photo')) {
                           onClick={(e) => e.preventDefault()}
                         >
                           <i className="ni ni-like-2" />
-                          <span className="text-muted">715 likes</span>
+                          <span className="text-muted">{numeral(postcoommentlikes).format('0,0')}</span>
                         </a>
                         <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          <i className="ni ni-curved-next" />
-                          <span className="text-muted">275 comments</span>
+                       
+                          <span className="text-muted"></span>
                         </a>
                       </div>
                     </div>

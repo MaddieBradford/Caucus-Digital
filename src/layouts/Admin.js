@@ -48,6 +48,7 @@ function Admin(props) {
   const [followsweek, setfollowsweek] = useState([]);
   const [pageimage, setPageImage] = useState({});
   const [oldimpressions, setOldImpressions] = useState([]);
+  const [postcoommentlikes, setpostcommentlikes] = useState([]);
   const [newfollows, setNewFollows] = useState([]);
   const [fourteenreach, setFourteenReach] = useState([]);
   const [fourteenreach2, setFourteenReach2] = useState([]);
@@ -137,20 +138,20 @@ alignItems: 'center';
                               'GET',
                               { access_token: Page_Access_Token },
                               function (response) {
-                                console.log("liesssss ",response.fan_count)
+                                console.log("liesssss ", response.fan_count)
                                 const newFollowers = response.fan_count;
                                 setFollowers(newFollowers);
 
 
 
-                                  window.FB.api(
-                                    `${PageID}/insights/page_fan_adds_unique?date_preset=last_7d`,
-                                    'GET',
-                                    { access_token: Page_Access_Token },
-                                    function (response) {
-                                      setOldPageFans(response.data);
-                                      console.log("olddd", response.data[1]?.values[6]?.value)
-                                    });
+                                window.FB.api(
+                                  `${PageID}/insights/page_fan_adds_unique?date_preset=last_7d`,
+                                  'GET',
+                                  { access_token: Page_Access_Token },
+                                  function (response) {
+                                    setOldPageFans(response.data);
+                                    console.log("olddd", response.data[1]?.values[6]?.value)
+                                  });
 
                                 window.FB.api(
                                   `${PageID}/insights/page_daily_follows_unique?&since=${previousweek}`,
@@ -165,27 +166,27 @@ alignItems: 'center';
                                   `${PageID}/feed?fields=id,permalink_url,message,created_time,admin_creator,full_picture,icon,shares,comments.summary(total_count),reactions.summary(total_count)&limit=19`,
                                   'GET',
                                   { access_token: Page_Access_Token },
-                                  
+
                                   async function (response) {
-                                    console.log("dddddddd",response)
-                                      const Posts = response?.data
-                                      await Promise.all(Posts.map(async post => {
-                                        const PostsRef = db.collection("Page_Posts").doc(newPageName).collection('Posts');
-                                        const doc = await PostsRef.where('id', '==', post.id).get();
-                                        if (!doc.docs.length) {
-                                          return PostsRef.add({
-                                            id: post?.id || '',
-                                            icon: post?.icon || '',
-                                            created_time: post?.created_time || '',
-                                            admin_creator: post?.admin_creator?.name || '',
-                                            reactions: post?.reactions?.summary?.total_count || '',
-                                            shares: post?.shares?.count || '',
-                                            message: post?.message || '',
-                                            url: post?.permalink_url || '',
-                                          })
-                                        }
-                                      }));
-                                      setPosts(response.data);
+                                    console.log("dddddddd", response)
+                                    const Posts = response?.data
+                                    await Promise.all(Posts.map(async post => {
+                                      const PostsRef = db.collection("Page_Posts").doc(newPageName).collection('Posts');
+                                      const doc = await PostsRef.where('id', '==', post.id).get();
+                                      if (!doc.docs.length) {
+                                        return PostsRef.add({
+                                          id: post?.id || '',
+                                          icon: post?.icon || '',
+                                          created_time: post?.created_time || '',
+                                          admin_creator: post?.admin_creator?.name || '',
+                                          reactions: post?.reactions?.summary?.total_count || '',
+                                          shares: post?.shares?.count || '',
+                                          message: post?.message || '',
+                                          url: post?.permalink_url || '',
+                                        })
+                                      }
+                                    }));
+                                    setPosts(response.data);
                                   });
 
                                 window.FB.api(
@@ -295,46 +296,56 @@ alignItems: 'center';
                                                         const impress99 = response;
                                                         setpostcountweek(impress99);
                                                         console.log("PostsWeek", postcountweek)
-                    
-                                                  
 
-                                                    window.FB.api(
-                                                      `${postId}/comments?filter=toplevel&limit=50`,
-                                                      'GET',
-                                                      { access_token: User_Access_Token },
-                                                      async function (response) {
-                                                        const Comments = response?.data
-                                                        await Promise.all(Comments.map(async comment => {
-                                                          const commentsRef = db.collection("Comments").doc(newPageName).collection('Comments');
-                                                          const doc = await commentsRef.where('commentId', '==', comment.id).get();
-                                                          if (!doc.docs.length) {
-                                                            return commentsRef.add({
-                                                              postId,
-                                                              comment: comment?.message,
-                                                              commentId: comment?.id
+
+
+                                                        window.FB.api(
+                                                          `${postId}/comments?filter=toplevel&limit=50&fields=reactions.summary(total_count)`,
+                                                          'GET',
+                                                          { access_token: User_Access_Token },
+                                                          async function (response27) {
+                                                            const commentlikes = response27?.data[0].reactions.summary.total_count
+                                                            setpostcommentlikes(commentlikes);
+                                                            //console.log("total likes", commentlikes[0].reactions.summary.total_count)
+                                                          })
+
+                                                        window.FB.api(
+                                                          `${postId}/comments?filter=toplevel&limit=50`,
+                                                          'GET',
+                                                          { access_token: User_Access_Token },
+                                                          async function (response) {
+                                                            const Comments = response?.data
+                                                            await Promise.all(Comments.map(async comment => {
+                                                              const commentsRef = db.collection("Comments").doc(newPageName).collection('Comments');
+                                                              const doc = await commentsRef.where('commentId', '==', comment.id).get();
+                                                              if (!doc.docs.length) {
+                                                                return commentsRef.add({
+                                                                  postId,
+                                                                  comment: comment?.message,
+                                                                  commentId: comment?.id
+                                                                })
+                                                              }
+                                                            }));
+                                                            setPostComment(Comments[0]?.message);
+
+                                                            await db.collection("Pages").doc(newPageName).set({
+                                                              PostsWeek: numeral(postcountweek.summary?.total_count).format('0,0') || '',
+                                                              Engagement: numeral(oldengagement[1]?.values[3]?.value).format('0,0') || '',
+                                                              Reach: numeral(impress6[1]?.values[3]?.value).format('0,0') || '',
+                                                              Followers: numeral(newFollowers).format('0,0') || '',
+                                                              PageImage: pageImageRes.url || '',
+                                                              PageName: newPageName || '',
+
                                                             })
-                                                          }
-                                                        }));
-                                                        setPostComment(Comments[0]?.message);
+                                                            setUserEmail(user.email);
 
-                                                        await db.collection("Pages").doc(newPageName).set({
-                                                          PostsWeek: numeral(postcountweek.summary?.total_count).format('0,0') || '',
-                                                          Engagement: numeral(oldengagement[1]?.values[3]?.value).format('0,0') || '',
-                                                          Reach: numeral(impress6[1]?.values[3]?.value).format('0,0') || '',
-                                                          Followers: numeral(newFollowers).format('0,0') || '',
-                                                          PageImage: pageImageRes.url || '',
-                                                          PageName: newPageName || '',
-                                                          
-                                                        })
-                                                        setUserEmail(user.email);
-
+                                                          });
                                                       });
                                                   });
                                               });
                                           });
                                       });
                                   });
-                                });
                               });
 
                           });
@@ -386,7 +397,7 @@ alignItems: 'center';
         return (
           <Route
             path={prop.layout + prop.path}
-            render={(props) => <prop.component comments={comments} oldpagefans={oldpagefans} age={age} oldengagement={oldengagement} fansonline2={fansonline2} fourteenreach2={fourteenreach2} totalreacts={totalreacts} fansonline={fansonline} oldimpressions={oldimpressions} followsweek={followsweek} postcountweek={postcountweek} postcomment={postcomment} postsid={postsid} newfollows={newfollows} setinsta={setinsta} pageimage={pageimage} pagename={pagename} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} {...props} data={data} />}
+            render={(props) => <prop.component comments={comments} oldpagefans={oldpagefans} age={age} oldengagement={oldengagement} postcoommentlikes={postcoommentlikes} fansonline2={fansonline2} fourteenreach2={fourteenreach2} totalreacts={totalreacts} fansonline={fansonline} oldimpressions={oldimpressions} followsweek={followsweek} postcountweek={postcountweek} postcomment={postcomment} postsid={postsid} newfollows={newfollows} setinsta={setinsta} pageimage={pageimage} pagename={pagename} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} {...props} data={data} />}
             // component={prop.component}
             key={key}
           />

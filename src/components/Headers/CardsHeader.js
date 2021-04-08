@@ -53,7 +53,8 @@ console.log("alpaaa", z)
 //old     //new
   const impressDiff = relDiff(oldimpressions[1]?.values[0]?.value, oldimpressions[1]?.values[3]?.value);
   const engagementDiff = relDiff(oldengagement[1]?.values[0]?.value, oldengagement[1]?.values[3]?.value);
-  const followersdiff = relDiff(oldpagefans[1]?.values[6]?.value, followers[1]?.values[6]?.value);
+  const followersdiff = relDiff(followers, followers);
+  const followerdiff = relDiff(oldpagefans[1]?.values[0]?.value, oldpagefans[1]?.values[6]?.value);
 
   useEffect(() => {
    // if (typeof (FB) !== 'undefined') {
@@ -131,7 +132,7 @@ console.log("alpaaa", z)
                     </Row>
                     <p className="mt-3 mb-0 text-sm">
                       <span className={`${engagementDiff > 0 ? 'text-success' : 'text-danger'} mr-2`}>
-                        <i className={`fa ${engagementDiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {engagementDiff.toFixed(2)}
+                        <i className={`fa ${engagementDiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {engagementDiff.toFixed(2)+"%"}
                       </span>{" "}
                       <span className="text-nowrap">Since last week</span>
                     </p>
@@ -167,7 +168,7 @@ console.log("alpaaa", z)
                     </Row>
                     <p className="mt-3 mb-0 text-sm">
                     <span className={`${impressDiff > 0 ? 'text-success' : 'text-danger'} mr-2`}>
-                        <i className={`fa ${impressDiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {impressDiff.toFixed(2)}
+                        <i className={`fa ${impressDiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {impressDiff.toFixed(2)+"%"}
                       </span>{" "}
                       <span className="text-nowrap">Since last week</span>
                     </p>
@@ -186,7 +187,7 @@ console.log("alpaaa", z)
                           New Followers
                         </CardTitle>
                         
-                        <span className="h2 font-weight-bold mb-0">{numeral(newfollows[1]?.values[0]?.value).format('0,0')}</span>
+                        <span className="h2 font-weight-bold mb-0">{numeral(oldpagefans[1]?.values[6]?.value).format('0,0')}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -195,8 +196,8 @@ console.log("alpaaa", z)
                       </Col>
                     </Row>
                     <p className="mt-3 mb-0 text-sm">
-                    <span className={`${followersdiff > 0 ? 'text-success' : 'text-danger'} mr-2`}>
-                        <i className={`fa ${followersdiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {followersdiff.toFixed(2)}
+                    <span className={`${followerdiff > 0 ? 'text-success' : 'text-danger'} mr-2`}>
+                        <i className={`fa ${followerdiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {followerdiff.toFixed(2)+"%"}
                       </span>{" "}
                       <span className="text-nowrap">Since last week</span>
                     </p>
@@ -224,7 +225,7 @@ console.log("alpaaa", z)
                     </Row>
                     <p className="mt-3 mb-0 text-sm">
                     <span className={`${followersdiff > 0 ? 'text-success' : 'text-danger'} mr-2`}>
-                        <i className={`fa ${followersdiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {followersdiff.toFixed(2)}
+                        <i className={`fa ${followersdiff > 0 ? 'fa-arrow-up' : 'fa-arrow-down'}`} /> {followersdiff.toFixed(2)+"%"}
                       </span>{" "}
                       <span className="text-nowrap">Since last week</span>
                     </p>
