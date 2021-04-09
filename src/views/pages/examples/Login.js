@@ -54,18 +54,18 @@ function Login({ history }) {
       .then((userCredential) => {
 
         history.push('/Admin')
-        window.FB.login(function(response) {
+      //   window.FB.login(function(response) {
 
-          if (response.authResponse) {
-           window.FB.api('/me', function(response) {
-            history.push('/Admin')
+      //     if (response.authResponse) {
+      //      window.FB.api('/me', function(response) {
+      //       history.push('/Admin')
   
-           });
-          } else {
-           console.log('User cancelled login or did not fully authorize.');
-          }
+      //      });
+      //     } else {
+      //      console.log('User cancelled login or did not fully authorize.');
+      //     }
   
-      }, {scope: 'business_management, pages_messaging, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, business_management, ads_read'})
+      // }, {scope: 'business_management, pages_messaging, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, business_management, ads_read'})
   
 
 

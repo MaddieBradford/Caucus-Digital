@@ -95,7 +95,7 @@ function Alternative(props) {
     getWordColor: word => word.value > 1 ? "white" : "white",
   }
 
-  console.log(posts[5].full_picture, "<==== this is the posts")
+  console.log(posts[5]?.full_picture, "<==== this is the posts")
 
   const vals = Object.entries(totalreacts[0]?.values[0]?.value).map(([k,v]) => ({label: k, value: v}));
   chartExample6.data.labels = vals.map(v => capitalizeFirstLetter(v.label));
@@ -306,9 +306,9 @@ if (posts[0]?.icon?.includes('photo')) {
                     href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
-                    {pagename} {posts[0]?.created_time.slice(0, 10)}
+                    {pagename} {posts[0]?.created_time?.slice(0, 10)}
                   </a>
-                {posts[0].full_picture === undefined ? "" :  <small className="d-block text-muted">{posts[0]?.message.slice(0,255)}...</small> }
+                {posts[0].full_picture === undefined ? "" :  <small className="d-block text-muted">{posts[0]?.message?.slice(0,255)}...</small> }
                 </div>
               </div>
               <div className="text-right ml-auto">

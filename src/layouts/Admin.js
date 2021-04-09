@@ -190,7 +190,7 @@ alignItems: 'center';
                                   });
 
                                 window.FB.api(
-                                  `${PageID}/feed?fields=id&limit=1`,
+                                  `${PageID}/feed?fields=id&limit=10`,
                                   'GET',
                                   { access_token: Page_Access_Token },
                                   function (response) {
@@ -304,13 +304,13 @@ alignItems: 'center';
                                                           'GET',
                                                           { access_token: User_Access_Token },
                                                           async function (response27) {
-                                                            const commentlikes = response27?.data[0].reactions.summary.total_count
+                                                            const commentlikes = response27?.data[0]?.reactions?.summary?.total_count
                                                             setpostcommentlikes(commentlikes);
                                                             //console.log("total likes", commentlikes[0].reactions.summary.total_count)
                                                           })
 
                                                         window.FB.api(
-                                                          `${postId}/comments?filter=toplevel&limit=50`,
+                                                          `${postId}/comments?filter=toplevel&limit=300`,
                                                           'GET',
                                                           { access_token: User_Access_Token },
                                                           async function (response) {
@@ -328,15 +328,16 @@ alignItems: 'center';
                                                             }));
                                                             setPostComment(Comments[0]?.message);
 
-                                                            await db.collection("Pages").doc(newPageName).set({
-                                                              PostsWeek: numeral(postcountweek.summary?.total_count).format('0,0') || '',
-                                                              Engagement: numeral(oldengagement[1]?.values[3]?.value).format('0,0') || '',
-                                                              Reach: numeral(impress6[1]?.values[3]?.value).format('0,0') || '',
-                                                              Followers: numeral(newFollowers).format('0,0') || '',
+                                                            console.log('impress99==>>',  impress99, 'newEngagement2==>>', newEngagement2, 'impress6==>>', impress6)
+                                                            /*await db.collection("Pages").doc(newPageName).set({
+                                                              PostsWeek: impress99.summary?.total_count || 0,
+                                                              Engagement: newEngagement2[1]?.values[3]?.value || 0,
+                                                              Reach: impress6[1]?.values[3]?.value || 0,
+                                                              Followers: newFollowers || 0,
                                                               PageImage: pageImageRes.url || '',
                                                               PageName: newPageName || '',
 
-                                                            })
+                                                            })*/
                                                             setUserEmail(user.email);
 
                                                           });

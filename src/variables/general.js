@@ -63,7 +63,52 @@ const events = [
     description:
       "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
   },
-
+  
+  {
+    id: 11,
+    title: "John Cain 1982 Election Victory",
+    start: new Date(y, m, 3),
+    allDay: true,
+    className: "bg-blue",
+    description:
+      "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  },
+  {
+    id: 13,
+    title: "Bob Andrews Death",
+    start: new Date(y, m, 24),
+    allDay: true,
+    className: "bg-orange",
+    description:
+      "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  },
+  {
+    id: 14,
+    title: "School Term 2 Begins",
+    start: new Date(y, m, 19),
+    allDay: true,
+    className: "bg-pink",
+    description:
+      "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  },
+  {
+    id: 12,
+    title: "John Cain's Birthday",
+    start: new Date(y, m, 26),
+    allDay: true,
+    className: "bg-green",
+    description:
+      "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  },
+  {
+    id: 15,
+    title: "Term 1 Ends",
+    start: new Date(y, m, 1),
+    allDay: true,
+    className: "bg-yellow",
+    description:
+      "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  },
   {
     id: 10,
     title: "Saturday before Easter Sunday",

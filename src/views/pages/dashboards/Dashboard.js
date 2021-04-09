@@ -147,7 +147,7 @@ function Dashboard(props) {
           allCommentIds = allCommentIds.docs.map(doc => doc.id);
 
           let allComments = await Promise.all(allCommentIds.map(async cId => {
-            const comments = await db.collection("Comments").doc(cId).collection('Comments').get();
+            const comments = await db.collection("Comments").doc(pagename).collection('Comments').get();
             return comments.docs.map(doc => doc.data());
           }));
           allComments = _.flatten(allComments);

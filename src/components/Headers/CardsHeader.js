@@ -46,10 +46,14 @@ function CardsHeader({ name, parentName, followers, oldpagefans, newfollows, old
 console.log("olddd22", (followers[1]?.values[6]?.value) - (oldpagefans[1]?.values[6]?.value) )
 console.log("olddd3", followers[1]?.values[6]?.value )
 
+
+
 let x = (oldpagefans[1]?.values[6]?.value)
-let y = (followers[1]?.values[6]?.value)
+let y = (oldengagement[1]?.values[0]?.value)
 let z = (y) - (x)
-console.log("alpaaa", z)
+console.log("aaaaalpaaa", z)
+console.log("aaaaolddd22", x )
+console.log("aaaaolddd3", y )
 //old     //new
   const impressDiff = relDiff(oldimpressions[1]?.values[0]?.value, oldimpressions[1]?.values[3]?.value);
   const engagementDiff = relDiff(oldengagement[1]?.values[0]?.value, oldengagement[1]?.values[3]?.value);
