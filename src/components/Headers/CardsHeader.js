@@ -49,7 +49,7 @@ console.log("olddd3", followers[1]?.values[6]?.value )
 
 
 let x = (oldpagefans[1]?.values[6]?.value)
-let y = (oldengagement[1]?.values[0]?.value)
+let y = (followers)
 let z = (y) - (x)
 console.log("aaaaalpaaa", z)
 console.log("aaaaolddd22", x )
@@ -57,7 +57,7 @@ console.log("aaaaolddd3", y )
 //old     //new
   const impressDiff = relDiff(oldimpressions[1]?.values[0]?.value, oldimpressions[1]?.values[3]?.value);
   const engagementDiff = relDiff(oldengagement[1]?.values[0]?.value, oldengagement[1]?.values[3]?.value);
-  const followersdiff = relDiff(followers, followers);
+  const followersdiff = relDiff(z, followers);
   const followerdiff = relDiff(oldpagefans[1]?.values[0]?.value, oldpagefans[1]?.values[6]?.value);
 
   useEffect(() => {

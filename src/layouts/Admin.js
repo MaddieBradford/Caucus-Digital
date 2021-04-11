@@ -94,7 +94,7 @@ alignItems: 'center';
               console.log('just loaded2==**', response)
               if (response.status === 'connected') {
 
-                const User_Access_Token = response.authResponse.accessToken;
+                const User_Access_Token = response?.authResponse?.accessToken;
                 setData(prev => ({ ...prev, User_Access_Token }));
                 //alert("logged in")
 
@@ -105,7 +105,7 @@ alignItems: 'center';
                   `https://graph.facebook.com/${PageID}?fields=access_token&access_token=${User_Access_Token}`,
                   'GET',
                   function (response) {
-                    var Page_Access_Token = response.access_token;
+                    var Page_Access_Token = response?.access_token;
 
                     setData(prev => ({ ...prev, Page_Access_Token }));
                     window.FB.api(
@@ -113,7 +113,7 @@ alignItems: 'center';
                       'GET',
                       { access_token: Page_Access_Token },
                       function (response) {
-                        const newPageName = response.name;
+                        const newPageName = response?.name;
                         setPageName(newPageName);
 
                         window.FB.api(
@@ -129,7 +129,7 @@ alignItems: 'center';
                           'GET',
                           { access_token: Page_Access_Token },
                           function (response) {
-                            const newEngagement2 = response.data;
+                            const newEngagement2 = response?.data;
                             setOldEngagement(newEngagement2);//[1],[0]
                             console.log("ENGAGEMENT OLD", response)
 
@@ -138,8 +138,8 @@ alignItems: 'center';
                               'GET',
                               { access_token: Page_Access_Token },
                               function (response) {
-                                console.log("liesssss ", response.fan_count)
-                                const newFollowers = response.fan_count;
+                                console.log("liesssss ", response?.fan_count)
+                                const newFollowers = response?.fan_count;
                                 setFollowers(newFollowers);
 
 
@@ -149,8 +149,8 @@ alignItems: 'center';
                                   'GET',
                                   { access_token: Page_Access_Token },
                                   function (response) {
-                                    setOldPageFans(response.data);
-                                    console.log("olddd", response.data[1]?.values[6]?.value)
+                                    setOldPageFans(response?.data);
+                                    console.log("olddd", response?.data[1]?.values[6]?.value)
                                   });
 
                                 window.FB.api(
@@ -158,7 +158,7 @@ alignItems: 'center';
                                   'GET',
                                   { access_token: Page_Access_Token },
                                   function (response) {
-                                    setfollowsweek(response.data);
+                                    setfollowsweek(response?.data);
 
                                   });
 
@@ -194,7 +194,7 @@ alignItems: 'center';
                                   'GET',
                                   { access_token: Page_Access_Token },
                                   function (response) {
-                                    const postId = response.data[0]?.id;
+                                    const postId = response?.data[0]?.id;
                                     setPostID(postId);
                                     //setPostID(response.data.posts[0]?.id)
 
@@ -203,7 +203,7 @@ alignItems: 'center';
                                       'GET',
                                       { access_token: Page_Access_Token },
                                       function (response) {
-                                        const pageImageRes = response.data;
+                                        const pageImageRes = response?.data;
                                         setPageImage(pageImageRes);
 
                                         window.FB.api(
@@ -265,7 +265,7 @@ alignItems: 'center';
                                           'GET',
                                           { access_token: Page_Access_Token },
                                           function (response) {
-                                            const impress6 = response.data;
+                                            const impress6 = response?.data;
                                             setOldImpressions(impress6);
                                             console.log("sddddd", oldimpressions[1]?.values[1]?.value)
                                             console.log("IMPRESSIONS OLD", response)
@@ -275,7 +275,7 @@ alignItems: 'center';
                                               'GET',
                                               { access_token: Page_Access_Token },
                                               function (response) {
-                                                const impress5 = response.data;
+                                                const impress5 = response?.data;
                                                 setTotalReacts(impress5);
                                                 console.log("impress5===>>", impress5)
 
@@ -284,7 +284,7 @@ alignItems: 'center';
                                                   'GET',
                                                   { access_token: Page_Access_Token },
                                                   function (response) {
-                                                    const impress9 = response.data;
+                                                    const impress9 = response?.data;
                                                     setAge(impress9);
                                                     console.log("impress5===>>", impress9)
 
@@ -329,7 +329,7 @@ alignItems: 'center';
                                                             setPostComment(Comments[0]?.message);
 
                                                             console.log('impress99==>>',  impress99, 'newEngagement2==>>', newEngagement2, 'impress6==>>', impress6)
-                                                            /*await db.collection("Pages").doc(newPageName).set({
+                                                            await db.collection("Pages").doc(newPageName).set({
                                                               PostsWeek: impress99.summary?.total_count || 0,
                                                               Engagement: newEngagement2[1]?.values[3]?.value || 0,
                                                               Reach: impress6[1]?.values[3]?.value || 0,
@@ -337,7 +337,7 @@ alignItems: 'center';
                                                               PageImage: pageImageRes.url || '',
                                                               PageName: newPageName || '',
 
-                                                            })*/
+                                                            })
                                                             setUserEmail(user.email);
 
                                                           });

@@ -110,29 +110,13 @@ function Register({history}, props) {
         setUserEmail(email);
         setUserPassword(password);
         //Signed in 
-        // setEmail(email);
-        // db.collection("Users").doc(email).set({
-        //   name: "Test",
-        //   state: "Test2",
-        //   country: "Test3"
-        // });
-        // localStorage.setItem('Email', email);
-        // history.push('/auth/lock');
-FacebookAuthenticate()
+        FacebookAuthenticate();
+      }
 
 
 
-
-        
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        // ..
-      });
-  }
+    
+      )}
 
   function FacebookAuthenticate(history) {
 
@@ -174,8 +158,9 @@ FacebookAuthenticate()
       Email: useremail,
       Password: userpassword,
       
+      
   })
-    history.push('/Admin');
+  history.push('/Admin');
     
   }
 
@@ -317,7 +302,7 @@ FacebookAuthenticate()
                     className="modal-dialog-centered"
                     size="sm"
                     isOpen={formModal}
-                    toggle={() => setformModal(false)}
+                    toggle={() => setformModal(true)}
                   >
                     <div className="modal-body p-0">
                       <Card className="bg-secondary border-0 mb-0">

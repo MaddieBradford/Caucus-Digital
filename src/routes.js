@@ -86,7 +86,7 @@ const routes = [
     icon: "ni ni-archive-2 text-primary",
     component: ReactBSTables,
     layout: "/admin",
-    muted: true
+    muted: false
   },
   {
     path: "/typography",
