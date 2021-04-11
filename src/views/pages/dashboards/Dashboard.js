@@ -80,7 +80,7 @@ var tz = require('moment-timezone');
 
 
 function Dashboard(props) {
-  const { impressions, newfollows, engagement, totalreacts, oldpagefans, postcomment, followers, posts, age, oldengagement, fansonline, fansonline2, oldimpressions, followsweek, pageimage, fourteenreach, postcountweek, fourteenreach2, pagename, comments } = props;
+  const { impressions, newfollows, engagement, totalreacts, oldpagefans, postreach, postcomment, followers, posts, age, oldengagement, fansonline, fansonline2, oldimpressions, followsweek, pageimage, fourteenreach, postcountweek, fourteenreach2, pagename, comments } = props;
   const [ranking, setRanking] = useState([]);
   const [reloadState, setReloadState] = useState(false)
   const history = useHistory()

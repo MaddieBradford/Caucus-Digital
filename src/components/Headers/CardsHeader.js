@@ -39,7 +39,7 @@ const relDiff = (a, b) => {
  }
 
 
-function CardsHeader({ name, parentName, followers, oldpagefans, newfollows, oldengagement, oldimpressions, followsweek}) {
+function CardsHeader({ name, parentName, followers, oldpagefans, postreach, newfollows, oldengagement, oldimpressions, followsweek}) {
 
   const history = useHistory()
   const [data, setData] = useState(null);console.log(10-"1");

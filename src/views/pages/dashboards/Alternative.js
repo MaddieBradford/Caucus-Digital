@@ -85,7 +85,7 @@ const clock = (15 - 24)
 const firebase = window.firebase;
 
 function Alternative(props) {
-  const { impressions, newfollows, engagement, postcomment, postcoommentlikes, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
+  const { impressions, newfollows, engagement, postcomment, postreach, postcoommentlikes, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
   const [wordss, setWordss] = React.useState({});
   const [posticon, setposticon] = useState([]);
   const newWords = Object.entries(wordss).map(([k, v]) => ({ text: k, value: v }));
@@ -236,7 +236,7 @@ if (posts[0]?.icon?.includes('photo')) {
                       Reach
                     </CardTitle>
                     <span className="h2 font-weight-bold mb-0 text-white">
-                      {numeral(posts[0]?.reactions?.summary?.total_count).format('0,0')}
+                      {numeral(postreach[0].insights.data[0].values[0].value).format('0,0')}
                     </span>
 
                   </div>

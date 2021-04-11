@@ -42,6 +42,7 @@ function Admin(props) {
   const [postcountweek, setpostcountweek] = useState([]);
   const [age, setAge] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [postreach, setPostReach] = useState([]);
   const [totalreacts, setTotalReacts] = useState([]);
   const [postsid, setPostID] = useState([]);
   const [oldengagement, setOldEngagement] = useState([]);
@@ -162,8 +163,16 @@ alignItems: 'center';
 
                                   });
 
+                                  window.FB.api(
+                                    `${PageID}/posts?fields=insights.metric(post_impressions_unique)&limit=10`,
+                                    'GET',
+                                    { access_token: Page_Access_Token },
+                                    function (response5) {
+                                      setPostReach(response5?.data);
+                                      console.log("impressss>>", response5.data.map(t => t.insights.data[0].values[0].value).reduce((a,b) => a+b)/response5.data.length)
+
                                 window.FB.api(
-                                  `${PageID}/feed?fields=id,permalink_url,message,created_time,admin_creator,full_picture,icon,shares,comments.summary(total_count),reactions.summary(total_count)&limit=19`,
+                                  `${PageID}/feed?fields=id,permalink_url,message,created_time,admin_creator,full_picture,icon,shares,comments.summary(total_count),reactions.summary(total_count)&limit=10`,
                                   'GET',
                                   { access_token: Page_Access_Token },
 
@@ -188,6 +197,7 @@ alignItems: 'center';
                                     }));
                                     setPosts(response.data);
                                   });
+                                });
 
                                 window.FB.api(
                                   `${PageID}/feed?fields=id&limit=10`,
@@ -398,7 +408,7 @@ alignItems: 'center';
         return (
           <Route
             path={prop.layout + prop.path}
-            render={(props) => <prop.component comments={comments} oldpagefans={oldpagefans} age={age} oldengagement={oldengagement} postcoommentlikes={postcoommentlikes} fansonline2={fansonline2} fourteenreach2={fourteenreach2} totalreacts={totalreacts} fansonline={fansonline} oldimpressions={oldimpressions} followsweek={followsweek} postcountweek={postcountweek} postcomment={postcomment} postsid={postsid} newfollows={newfollows} setinsta={setinsta} pageimage={pageimage} pagename={pagename} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} {...props} data={data} />}
+            render={(props) => <prop.component postreach={postreach} comments={comments} oldpagefans={oldpagefans} age={age} oldengagement={oldengagement} postcoommentlikes={postcoommentlikes} fansonline2={fansonline2} fourteenreach2={fourteenreach2} totalreacts={totalreacts} fansonline={fansonline} oldimpressions={oldimpressions} followsweek={followsweek} postcountweek={postcountweek} postcomment={postcomment} postsid={postsid} newfollows={newfollows} setinsta={setinsta} pageimage={pageimage} pagename={pagename} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} {...props} data={data} />}
             // component={prop.component}
             key={key}
           />

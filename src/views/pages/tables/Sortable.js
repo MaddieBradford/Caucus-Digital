@@ -70,8 +70,9 @@ function Sortable({ impressions, newfollows, engagement, totalreacts, oldpagefan
 
 
     db.collection("Pages").get().then((querySnapshot) => {
-      setPages(querySnapshot.docs.map(d => d.data()));
+      setPages(querySnapshot.docs.map(d => d.data()).sort((a,b) => a.Reach > b.Reach ? -1 : 1));
     });
+
 
 
 
@@ -92,7 +93,24 @@ function Sortable({ impressions, newfollows, engagement, totalreacts, oldpagefan
 
   console.log("batttt", engagement)
 
-
+  const nearestThousand = value => {
+    let rangeValue;
+    switch (true) {
+      case value == 0:
+        rangeValue = 0;
+        break;
+      case value < 100:
+        rangeValue = '<100';
+        break;
+      case value < 1000:
+        rangeValue = '<1000';
+    }
+    const valStr = value.toString();
+    const valStrLen = valStr.length - 1;
+    const factor = Math.pow(10, valStrLen);
+    console.log('valStr==>>', value, 'bbb', valStrLen, 'hhhhhh', factor)
+    return  rangeValue === 0 ? rangeValue : (rangeValue || `<${numeral(Math.round(value/factor)*factor).format('0,0')}`);
+  }
 
   return (
     <>
@@ -235,11 +253,11 @@ function Sortable({ impressions, newfollows, engagement, totalreacts, oldpagefan
                             </Media>
                           </Media>
                         </td>
-                        <td className="Reach">{numeral(page.Reach).format('0,0')}</td>
+                        <td className="Reach">{nearestThousand(page.Reach)}</td>
                         <td className="Engagement">
                           <Badge className="badge-dot mr-4" color="">
                             <i className="bg-warning" />
-                            <span className="status">{page.Engagement}</span>
+                            <span className="status">{(page.Engagement)}</span>
                           </Badge>
                         </td>
                         <td className="Followers">{page.Followers}</td>
