@@ -72,7 +72,7 @@ function RTLSupport() {
                     onClick={(e) => e.preventDefault()}
                     size="sm"
                   >
-                    الاتصال
+                
                   </Button>
                   <Button
                     className="float-right"
@@ -409,7 +409,7 @@ function RTLSupport() {
                             className="form-control-label"
                             htmlFor="input-last-name"
                           >
-                            الكنية
+                            
                           </label>
                           <Input
                             defaultValue="الكنية"
@@ -424,7 +424,7 @@ function RTLSupport() {
                   <hr className="my-4" />
 
                   <h6 className="heading-small text-muted mb-4">
-                    معلومات الاتصال
+                    
                   </h6>
                   <div className="pl-lg-4">
                     <Row>

@@ -1,0 +1,13 @@
+Basically it is sorting by ads first, then twitter, then facebook posts rather than by date - and the reactions (popularity) sort doesn't seem tow ork either.
+
+//there is issue with both sorting and filtering?
+
+It seems so, if you press eitehr button it doesn't seem tow ork - the initial sort is the most important though.
+It should by default be sorted by date.
+
+filtering was done using buttons initally, u changed to text input?
+
+Text input is disabled, it's just there at the moment. Doesn't do anything.
+
+
+where are the boxes for filtering?

@@ -90,6 +90,7 @@ const TagsInput = React.forwardRef((props, ref) => {
   const [tagState, setTagState] = React.useState("");
   const [isFocusedState, setIsFocusedState] = React.useState(false);
   React.useEffect(() => {
+    console.log("useEffect 4")
     if (hasControlledInputHook() && !inputValueHook(props)) {
     } else {
       setTagState(inputValueHook(props));

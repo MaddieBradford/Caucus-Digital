@@ -30,16 +30,16 @@ function IndexHeader() {
               <Col lg="6">
                 <div className="pr-5">
                   <h1 className="display-2 text-white font-weight-bold mb-0">
-                  Caucus Analytics
+                  Caucus Digital
                   </h1>
                   <h2 className="display-4 text-white font-weight-light">
-                  Accessible Political Social Analytics
+                  Political Digital Analytics.
                   </h2>
-                  <p className="text-white mt-4">
-                  Caucus Analytics Accessible Social Analytics
-                  </p>
-                  <div className="mt-5">
-                    <Button
+                  {/* <p className="text-white mt-4">
+                  Caucus Digital
+                  </p> */}
+                 <div className="mt-5">
+                    {/* <Button
                       className="btn-neutral my-2"
                       color="default"
                       to="/admin/dashboard"
@@ -53,11 +53,11 @@ function IndexHeader() {
                       href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
                     >
                       Purchase now
-                    </Button>
+                    </Button>  */}
                   </div>
                 </div>
               </Col>
-              <Col lg="6">
+              {/* <Col lg="6"> 
                 <Row className="pt-5">
                   <Col md="6">
                     <Card>
@@ -106,7 +106,7 @@ function IndexHeader() {
                     </Card>
                   </Col>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
           </div>
         </Container>

@@ -44,9 +44,9 @@ import Widgets from "views/pages/Widgets.js";
 const routes = [
   {
         path: "/dashboard",
-        name: "Page Overview",
+        name: "Page Dashboard",
         miniName: "D",
-        icon: "ni ni-shop text-primary",
+        icon: "ni ni-shop text-default",
         component: Dashboard,
         layout: "/admin",
         muted: false,
@@ -65,33 +65,52 @@ const routes = [
     path: "/alternative-dashboard",
     name: "Post Analytics",
     miniName: "A",
-    icon: "ni ni-chart-bar-32 text-primary",
+    icon: "ni ni-chart-bar-32 text-default",
     component: Alternative,
     layout: "/admin",
-    muted: false
+    muted: true
   },
   {
     path: "/sortable",
-    name: "Benchmark",
+    name: "Leaderboard",
     miniName: "S",
-    icon: "ni ni-world text-primary",
+    icon: "ni ni-chart-bar-32 text-default",
     component: Sortable,
     layout: "/admin",
     muted: false
   },
   {
+    path: "/vector",
+    name: "Social Feed",
+    miniName: "V",
+    component: Vector,
+    layout: "/admin",
+    icon: "ni ni-world text-default",
+    muted: false
+  },
+  <hr className="my-3" />,
+  {
     path: "/react-bs-table",
     name: "Search",
     miniName: "RBT",
-    icon: "ni ni-archive-2 text-primary",
+    icon: "ni ni-archive-2 text-default",
     component: ReactBSTables,
     layout: "/admin",
-    muted: false
+    muted: true
+  },
+  {
+    path: "/Profile",
+    name: "Profile",
+    miniName: "Profile",
+    icon: "ni ni-archive-2 text-default",
+    component: Profile,
+    layout: "/admin",
+    muted: true
   },
   {
     path: "/typography",
           name: "Image Editor",
-          icon: "ni ni-image text-primary",
+          icon: "ni ni-image text-default",
           miniName: "T",
           component: Typography,
           layout: "/admin",
@@ -101,7 +120,7 @@ const routes = [
     {
       path: "/calendar",
       name: "Planning Calendar",
-      icon: "ni ni-calendar-grid-58 text-primary",
+      icon: "ni ni-calendar-grid-58 text-default",
       component: Calendar,
       layout: "/admin",
       muted: false
@@ -151,6 +170,7 @@ const routes = [
         layout: "/auth",
         muted: true
       },
+   
   //     {
   //       path: "/timeline",
   //       name: "Timeline",
@@ -285,13 +305,7 @@ const routes = [
   //   icon: "ni ni-align-left-2 text-default",
   //   state: "tablesCollapse",
   //   views: [
-  //     {
-  //       path: "/tables",
-  //       name: "Tables",
-  //       miniName: "T",
-  //       component: Tables,
-  //       layout: "/admin",
-  //     },
+  
   //     {
   //       path: "/sortable",
   //       name: "Sortable",
@@ -321,13 +335,14 @@ const routes = [
   //       component: Google,
   //       layout: "/admin",
   //     },
-  //     {
-  //       path: "/vector",
-  //       name: "Vector",
-  //       miniName: "V",
-  //       component: Vector,
-  //       layout: "/admin",
-  //     },
+      // {
+      //   path: "/vector",
+      //   name: "Feed",
+      //   miniName: "V",
+      //   component: Vector,
+      //   layout: "/admin",
+      //   icon: "ni ni-bulb-61 text-blue",
+      // },
   //   ],
   // },
   // {

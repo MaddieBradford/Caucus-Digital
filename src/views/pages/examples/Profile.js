@@ -45,11 +45,7 @@ function Profile() {
         <Row>
           <Col className="order-xl-2" xl="4">
             <Card className="card-profile">
-              <CardImg
-                alt="..."
-                src={require("assets/img/theme/img-1-1000x600.jpg").default}
-                top
-              />
+  
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">

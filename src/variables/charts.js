@@ -187,118 +187,7 @@ var colors = {
 // Methods
 
 // Chart.js global options
-function chartOptions(fourteenreach) {
-  // Options
-  var options = {
-    defaults: {
-      global: {
-        responsive: true,
-        maintainAspectRatio: false,
-        defaultColor: mode === "dark" ? colors.gray[700] : colors.gray[600],
-        defaultFontColor: mode === "dark" ? colors.gray[700] : colors.gray[600],
-        defaultFontFamily: fonts.base,
-        defaultFontSize: 13,
-        layout: {
-          padding: 0,
-        },
-        legend: {
-          display: false,
-          position: "bottom",
-          labels: {
-            usePointStyle: true,
-            padding: 16,
-          },
-        },
-        elements: {
-          point: {
-            radius: 0,
-            backgroundColor: colors.theme["primary"],
-          },
-          line: {
-            tension: 0.4,
-            borderWidth: 4,
-            borderColor: colors.theme["primary"],
-            backgroundColor: colors.transparent,
-            borderCapStyle: "rounded",
-          },
-          rectangle: {
-            backgroundColor: colors.theme["warning"],
-          },
-          arc: {
-            backgroundColor: colors.theme["primary"],
-            borderColor: mode === "dark" ? colors.gray[800] : colors.white,
-            borderWidth: 4,
-          },
-        },
-        tooltips: {
-          enabled: true,
-          mode: "index",
-          intersect: false,
-        },
-      },
-      doughnut: {
-        cutoutPercentage: 83,
-        legendCallback: function (chart) {
-          var data = chart.data;
-          var content = "";
 
-          data.labels.forEach(function (label, index) {
-            var bgColor = data.datasets[0].backgroundColor[index];
-
-            content += '<span class="chart-legend-item">';
-            content +=
-              '<i class="chart-legend-indicator" style="background-color: ' +
-              bgColor +
-              '"></i>';
-            content += label;
-            content += "</span>";
-          });
-
-          return content;
-        },
-      },
-    },
-  };
-
-  // yAxes
-  Chart.scaleService.updateScaleDefaults("linear", {
-    gridLines: {
-      borderDash: [2],
-      borderDashOffset: [2],
-      color: mode === "dark" ? colors.gray[900] : colors.gray[300],
-      drawBorder: false,
-      drawTicks: false,
-      lineWidth: 1,
-      zeroLineWidth: 1,
-      zeroLineColor: mode === "dark" ? colors.gray[900] : colors.gray[300],
-      zeroLineBorderDash: [2],
-      zeroLineBorderDashOffset: [2],
-    },
-    ticks: {
-      beginAtZero: true,
-      padding: 10,
-      callback: function (value) {
-        if (!(value % 10)) {
-          return value;
-        }
-      },
-    },
-  });
-
-  // xAxes
-  Chart.scaleService.updateScaleDefaults("category", {
-    gridLines: {
-      drawBorder: false,
-      drawOnChartArea: false,
-      drawTicks: false,
-    },
-    ticks: {
-      padding: 20,
-    },
-  });
-
-  return options;
-}
 
 // Parse global options
 function parseOptions(parent, options) {
@@ -313,21 +202,53 @@ function parseOptions(parent, options) {
 
 // Example 1 of Chart inside src/views/dashboards/Dashboard.js
 let chartExample1 = (fourteenreach) =>  {
+  
+  
   return {options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: true,
+  },
     scales: {
+      xAxes: [
+        {
+         
+          gridLines: {
+            lineWidth: 0,
+            display:false,
+            color: "rgba(0, 0, 0, 0)",
+          }  },
+        ],
       yAxes: [
         {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          id: 'y-axis-1',
           gridLines: {
-            color: colors.gray[700],
-            zeroLineColor: colors.gray[700],
+            lineWidth: 0,
+            display:false,
+            color: "rgba(0, 0, 0, 0)",
           },
-          ticks: {
-            callback: function (value) {
-              if (!(value % 10)) {
-                return numeral(value).format('0,0');
-              }
-            },
+       
+    
+        },
+        {
+          type: 'linear',
+          display: false,
+          position: 'right',
+          id: 'y-axis-2',
+          
+          gridLines: {
+            lineWidth: 0,
+            display:false,
+            
+            color: "rgba(0, 0, 0, 0)",
           },
+         
+          
+        
         },
       ],
     },
@@ -350,25 +271,37 @@ let chartExample1 = (fourteenreach) =>  {
   },
   data1: (canvas) => {
     return {
-
-      labels: fourteenreach[0]?.values.map(v => v.end_time.slice(0, 10)),
+      labels: fourteenreach.map(v => v.end_time.slice(5, 10)),
       datasets: [
         {
-          label: "Performance",
-          data:  fourteenreach[0]?.values.map(v => {
+          label: 'Daily Reach',
+          data: fourteenreach.map(v => {
             return v.value;
-          })   //fourteenreach[0]?.values.map(v => v.end_time)
+          }) ,
+          fill: false,
+          backgroundColor: 'rgb(255, 99, 132)',
+         borderColor: 'rgba(255, 99, 132, 0.2)',
+         // yAxisID: 'y-axis-1',
+        },
+        {
+          label: 'Post Engagement',
+          data: [12, 23, 22, 444, 443, 56, 45, 23],
+          fill: false,
+          backgroundColor: 'rgb(54, 162, 235)',
+         borderColor: 'rgba(54, 162, 235, 0.2)',
+          //yAxisID: 'y-axis-2',
         },
       ],
     };
+      
   },
   data2: (canvas) => {
     return {
-      labels: fourteenreach[2]?.values.map(v => v.end_time.slice(0, 10)),
+      labels: fourteenreach.map(v => v.end_time.slice(0, 10)),
       datasets: [
         {
           label: "Performance",
-          data:  fourteenreach[2]?.values.map(v => {
+          data:  fourteenreach.map(v => {
 
             return v.value;
           })   //fourteenreach[0]?.values.map(v => v.end_time)
@@ -381,18 +314,32 @@ let chartExample1 = (fourteenreach) =>  {
 // Example 2 of Chart inside src/views/dashboards/Dashboard.js and src/views/dashboards/Alternative.js and src/views/pages/Charts.js
 let chartExample2 = {
   options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+  },
     scales: {
+      xAxes: [
+        {
+         
+          gridLines: {
+            lineWidth: 0,
+            display:false,
+            color: "rgba(0, 0, 0, 0)",
+          }  },
+        ],
       yAxes: [
         {
           gridLines: {
-            color: colors.gray[100],
-            zeroLineColor: colors.gray[100],
+            lineWidth: 0,
+            display:false,
+            color: "rgba(0, 0, 0, 0)",
           },
           ticks: {
             callback: function (value) {
               if (!(value % 10)) {
-                return numeral(value).format('0,0')
-                return value;
+                //return numeral(value).format('0,0')
+                //return value;
               }
             },
           },
@@ -408,7 +355,7 @@ let chartExample2 = {
           if (data.datasets.length > 1) {
             content += label;
           }
-          content += yLabel;
+          content += numeral(yLabel).format('0,0');
           return content;
         },
       },
@@ -417,6 +364,7 @@ let chartExample2 = {
   data: {
     labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
+      
       {
         label: "Sales",
         data: [          
@@ -427,6 +375,33 @@ let chartExample2 = {
           randomScalingFactor(),
           randomScalingFactor(),
         ],
+        backgroundColor: [
+         // 'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          
+
+        ],
+        borderColor: [
+          
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(54, 162, 235, 1)',
+          
+
+        ],
+        borderWidth: 1,
+        animation: false,
+    
         maxBarThickness: 10,
       },
     ],
@@ -436,6 +411,10 @@ let chartExample2 = {
 // Example 3 of Chart inside src/views/dashboards/Alternative.js and src/views/pages/Charts.js
 let chartExample3 = {
   options: {
+    legend: {
+      display: false,
+  },
+    maintainAspectRatio: false,
     scales: {
       yAxes: [
         {
@@ -461,35 +440,54 @@ let chartExample3 = {
 
 // Example 4 of Chart inside src/views/pages/Charts.js
 const chartExample4 = {
-  options: {
-    scales: {
-      yAxes: [
-        {
-          gridLines: {
-            color: colors.gray[200],
-            zeroLineColor: colors.gray[200],
-          },
-          ticks: {},
-        },
-      ],
-    },
-  },
   data: {
-    labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["Danger", "Warning", "Success", "Primary", "Info"],
     datasets: [
       {
-        label: "Performance",
-        data: [10, 18, 28, 23, 28, 40, 36, 46, 52],
-        pointRadius: 10,
-        pointHoverRadius: 15,
-        showLine: false,
+        data: [
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 206, 86, 1)',
+
+        ],
+        borderWidth: 1,
+        animation: false,
+    
       },
     ],
   },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+      position: "bottom",
+  },
+  
+    animation: {
+      animateScale: false,
+      animateRotate: true,
+    },
+  },
 };
 
-// Example 5 of Chart inside src/views/pages/Charts.js
-const chartExample5 = {
+
+const chartExample8 = {
   data: {
     labels: ["Danger", "Warning", "Success", "Primary", "Info"],
     datasets: [
@@ -512,21 +510,24 @@ const chartExample5 = {
     ],
   },
   options: {
+    maintainAspectRatio: false,
     responsive: true,
     legend: {
+      display: false,
       position: "top",
-    },
+  },
+    
     animation: {
-      animateScale: true,
+      animateScale: false,
       animateRotate: true,
     },
   },
 };
 
-// Example 6 of Chart inside src/views/pages/Charts.js
-const chartExample6 = {
+// Example 5 of Chart inside src/views/pages/Charts.js
+const chartExample5 = {
   data: {
-    labels: ["Like", "Love", "Angry", "Sad", "Wow", "laugh"],
+    labels: ["Danger", "Warning", "Success", "Primary", "Info"],
     datasets: [
       {
         data: [
@@ -535,26 +536,76 @@ const chartExample6 = {
           randomScalingFactor(),
           randomScalingFactor(),
           randomScalingFactor(),
-          randomScalingFactor(),
         ],
         backgroundColor: [
-          colors.theme["info"],
-          colors.theme["danger"],
-          colors.theme["success"],
-          colors.theme["primary"],
-          colors.theme["warning"],
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
         ],
-        label: "Dataset 1",
+        borderColor: [
+          'rgba(255, 206, 86, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+        animation: false,
+    
       },
     ],
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+      position: "top",
+  },
+    animation: {
+      animateScale: false,
+      animateRotate: true,
+    },
+  },
+};
+
+// Example 6 of Chart inside src/views/pages/Charts.js
+const chartExample6 = {
+  data: {
+    labels: ["Like", "Love", "Angry", "Sad", "Wow", "Laugh"],
+    datasets: [
+      {
+        data: [
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+        ],
+        backgroundColor: [
+          
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 206, 86, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+        animation: false,
+    
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
     legend: {
       position: "top",
     },
+    backgroundColor: 'rgb(54, 162, 235)',
+    borderColor: 'rgba(54, 162, 235, 0.2)',
     animation: {
-      animateScale: true,
+      animateScale: false,
       animateRotate: true,
     },
   },
@@ -614,6 +665,10 @@ const chartExample7 = {
       mode: "index",
       intersect: false,
     },
+    legend: {
+      display: false,
+      position: "top",
+  },
     responsive: true,
     scales: {
       xAxes: [
@@ -631,8 +686,8 @@ const chartExample7 = {
 };
 
 module.exports = {
-  chartOptions, // used alonside with the chartExamples variables
-  parseOptions, // used alonside with the chartExamples variables
+ //chartOptions, // used alonside with the chartExamples variables
+  //parseOptions, // used alonside with the chartExamples variables
   chartExample1, // used inside src/views/dashboards/Dashboard.js
   chartExample2, // used inside src/views/dashboards/Dashboard.js and src/views/dashboards/Alternative.js and src/views/pages/Charts.js
   chartExample3, // used inside src/views/dashboards/Alternative.js and src/views/pages/Charts.js

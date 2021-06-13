@@ -1,0 +1,69 @@
+.avatars{
+        position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: -3.8%;
+}
+
+.avatars .avatar{
+    margin-left: 1rem !important;
+}
+
+.custom-dropdown{
+    padding-top: 15px;
+}
+
+.custom-dropdown li{
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px 10px;
+}
+
+.custom-dropdown.dropdown-menu .dropdown-item{
+    padding: 0 !important;
+    background-color: transparent !important;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.custom-dropdown .avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-header-body{
+margin: 10px 0;
+display: flex;
+}
+
+.custom-dropdown.dropdown-menu .dropdown-item img{
+    margin-right: 0 !important;
+}
+
+.seperator{
+    border-left: 2px solid black;
+    margin: 0 5px;
+}
+
+.max-250{
+    max-width: 700px;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 100;
+    }
+}
+
+.fade-in{
+    opacity: 100;
+    animation: fadeIn ease-in 1;
+    animation-fill-mode: fowards;
+    animation-duration: 1s;
+}
+

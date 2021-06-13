@@ -29,21 +29,14 @@ function AdminFooter() {
             <Col lg="6">
               <div className="copyright text-center text-lg-left text-muted">
                 © {new Date().getFullYear()}{" "}
-                <a
-                  className="font-weight-bold ml-1"
-                  href="https://www.creative-tim.com?ref=adpr-admin-footer"
-                  target="_blank"
-                >
-                  Bradford
-                </a>
+                <a href={"mailto:maddie@caucus.digital"}> MADDIE LEE BRADFORD ABN: 78 817 645 517 </a>
               </div>
             </Col>
             <Col lg="6">
               <Nav className="nav-footer justify-content-center justify-content-lg-end">
                 <NavItem>
                   <NavLink
-                    href="https://www.creative-tim.com?ref=adpr-admin-footer"
-                    target="_blank"
+                    
                   >
                     Bradford
                   </NavLink>

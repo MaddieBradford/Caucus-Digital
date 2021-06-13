@@ -1,0 +1,65 @@
+.modal-body.custom{
+    display: flex;
+    
+}
+
+.modal-body.custom > .card{
+    width: 48%;
+    margin: 0 1%;
+  
+    
+}
+
+.card-body {
+    padding: 0.6rem;
+    border-radius: 9px;
+}
+
+.modal-header {
+    padding-bottom: 0rem;
+}
+
+.modal2{
+    max-height: 717px;
+    min-height: 717px;
+    border-radius: 9px;
+}
+
+.maxh-395{
+    max-height: 395px;
+    min-height: 395px;
+    overflow: scroll;
+}
+
+
+
+.maxh-395::-webkit-scrollbar{
+    display: none;
+    
+}
+
+.maxh-626{
+    max-height: 336px;
+    height: 100%;
+    
+}
+
+.custom-bg-lightgray .quill{
+    flex: 1;
+}
+
+.mt-60{
+    margin-top: 60px;
+}
+
+.custom-bg-lightgray{
+    background-color: #f6f7f9 !important;
+}
+
+
+@media (min-width: 576px){
+.modal-dialog.custom {
+    max-width: 1000px;
+    margin: 1.75rem auto;
+}
+}

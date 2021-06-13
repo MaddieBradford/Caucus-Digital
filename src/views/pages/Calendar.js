@@ -204,31 +204,20 @@ function CalendarView() {
   return (
     <>
       {alert}
-      <div className="header header-dark bg-info pb-6 content__title content__title--calendar">
+      <div className="header header-blue pb-6 content__title content__title--calendar">
         <Container fluid>
           <div className="header-body">
             <Row className="align-items-center py-4">
               <Col lg="6">
-                <h6 className="fullcalendar-title h2 text-white d-inline-block mb-0 mr-1">
+                <h6 className="fullcalendar-title h2 text-blue d-inline-block mb-0 mr-1">
                   {currentDate}
                 </h6>
                 <Breadcrumb
                   className="d-none d-md-inline-block ml-lg-4"
-                  listClassName="breadcrumb-links breadcrumb-dark"
+                  listClassName=""
                 >
-                  <BreadcrumbItem>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <i className="fas fa-home" />
-                    </a>
-                  </BreadcrumbItem>
-                  <BreadcrumbItem>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      Dashboard
-                    </a>
-                  </BreadcrumbItem>
-                  <BreadcrumbItem aria-current="page" className="active">
-                    Calendar
-                  </BreadcrumbItem>
+                 
+                  
                 </Breadcrumb>
               </Col>
               <Col className="mt-3 mt-md-0 text-md-right" lg="6">

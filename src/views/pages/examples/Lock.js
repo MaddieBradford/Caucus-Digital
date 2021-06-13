@@ -83,42 +83,7 @@ var email = localStorage.getItem('Email');
 
   function FacebookAuthenticate(history) {
 
-    window.FB.login(function (response) {
-      if (response.authResponse) {
-        window.FB.api('/me', function (response) {
-          //history.push('/Admin')
-          { setformModal(true) }
-
-          window.FB.getLoginStatus(function (response) {
-            console.log(response)
-            if (response.status === 'connected') {
-              console.log(response)
-              var User_Access_Token = response.authResponse.accessToken;
-            }
-
-            window.FB.api(
-              `me/accounts`,
-              'GET',
-              { access_token: User_Access_Token },
-              function (response) {
-                setAccountsList(response.data);
-
-                db.collection("Users").doc(email).set({
-                  User_Access_Token: "Los Angeles",
-                  state: "CA",
-                  country: "USA"
-              })
-                
-              });
-          });
-
-        });
-      } else {
-        console.log('User cancelled login or did not fully authorize.');
-      }
-
-    }, { scope: 'business_management, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, business_management, ads_read' })
-
+   
     function FacebokLogin() {
 
 
@@ -132,7 +97,7 @@ var email = localStorage.getItem('Email');
   const saveAccessToken = account => {
     localStorage.setItem('Page_Access_Token', account.access_token);
     history.push('/admin');
-    console.log("ffffffff", localStorage.getItem('Page_Access_Token'));
+   
   }
 
   return (

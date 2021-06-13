@@ -30,6 +30,8 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  CardText,
+  CardImg,
   Form,
   DropdownMenu,
   DropdownItem,
@@ -85,9 +87,10 @@ const clock = (15 - 24)
 const firebase = window.firebase;
 
 function Alternative(props) {
-  const { impressions, newfollows, engagement, postcomment, postreach, postcoommentlikes, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
+  const { impressions, newfollows, engagement, postcomment, totalpostclicks, postreach, postcoommentlikes, followers, posts, pageimage, fourteenreach, pagename, comments, totalreacts } = props;
   const [wordss, setWordss] = React.useState({});
   const [posticon, setposticon] = useState([]);
+  const [posts2, setPosts] = useState([]);
   const newWords = Object.entries(wordss).map(([k, v]) => ({ text: k, value: v }));
   const db = firebase.firestore();
   const size = [800, 400];
@@ -102,7 +105,8 @@ function Alternative(props) {
   chartExample6.data.datasets[0].data = vals.map(v => v.value);
   
   useEffect(() => {
-    console.log("dddd", posts[0]?.icon)
+    console.log("useEffect 11")
+   
     if (pagename) {
       (async () => {
         try {
@@ -110,7 +114,7 @@ function Alternative(props) {
           comments = comments.docs.map(doc => doc.data());
           let words = await db.collection("Word_Cloud_Filter").doc('Words').get();
           words = words.data().Words.map(w => w.trim().toLowerCase());
-          console.log('comm==**', comments, 'wordss==>>', words);
+         
           const textLegend = {};
           comments.forEach(item => {
             item.comment.split(' ').forEach(w => {
@@ -123,18 +127,19 @@ function Alternative(props) {
             if (v) filteredTextLegend[k] = v;
           })
           setWordss(filteredTextLegend)
-          console.log('hey==**', filteredTextLegend)
+  
        
         } catch(err) {
-          console.log('an err occured==**', err)
+         // console.log('an error occured==**', err)
         }
       })();
     } else {
-      console.log('pagenmae not defind==**')
+     // console.log('pagenmae not defind==**')
     }
   }, [])
 
   React.useEffect(() => {
+    console.log("useEffect 12")
 
 if (posts[0]?.icon?.includes('photo')) {
 
@@ -156,9 +161,19 @@ if (posts[0]?.icon?.includes('photo')) {
     }
   }, []);
 
+  useEffect(() => {
+  
+
+    (async() => {
+      const getPosts = await db.collection("Page_Posts").doc(pagename).collection('Posts').get();
+      setPosts(getPosts.docs.map(p => ({...p.data()})));
+      console.log("dddddf", getPosts.docs)
+    })();
+  }, []);
+
   return (
     <>
-      <AlternativeHeader comments={comments} impressions={impressions} postcoommentlikes={postcoommentlikes} postcomment={postcomment} newfollows={newfollows} engagement={engagement} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} pagename={pagename} name="Social2 Dashboard" parentName="Caucus" />
+      <AlternativeHeader comments={comments} impressions={impressions} totalpostclicks={totalpostclicks} postcoommentlikes={postcoommentlikes} postcomment={postcomment} newfollows={newfollows} engagement={engagement} followers={followers} posts={posts} pageimage={pageimage} fourteenreach={fourteenreach} pagename={pagename} name="Social2 Dashboard" parentName="Caucus" />
       
       <Container className="mt--6" fluid>
         
@@ -236,7 +251,7 @@ if (posts[0]?.icon?.includes('photo')) {
                       Reach
                     </CardTitle>
                     <span className="h2 font-weight-bold mb-0 text-white">
-                      {numeral(postreach[0].insights.data[0].values[0].value).format('0,0')}
+                      {numeral(totalpostclicks[0].values[0].value).format('0,0')}
                     </span>
 
                   </div>
@@ -245,6 +260,7 @@ if (posts[0]?.icon?.includes('photo')) {
             </Card>
           </Col>
         </Row>
+        
         <div className="card-deck dog flex-column flex-xl-row">
 
 
@@ -262,6 +278,12 @@ if (posts[0]?.icon?.includes('photo')) {
                  id="chart-bars2"
                />
              </div>
+             
+
+
+
+
+             
            </CardBody>
             <CardHeader className="bg-transparent">
               <h6 className="text-muted text-uppercase ls-1 mb-4"></h6>
@@ -277,75 +299,38 @@ if (posts[0]?.icon?.includes('photo')) {
               </CardBody>
             </Card>
           </Card>
-
-          <Card>
-            <CardHeader>
-            <div className="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
-              
-                          <i className={posticon} /> 
-                        </div>
-                        <h5 className="h3 mb-0"></h5>
-              
-            </CardHeader>
-            
-            <CardHeader className="d-flex align-items-center">
-              <div className="d-flex align-items-center">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <img
-                    alt="..."
-                    className="avatar"
-                    src={pageimage?.url}
-
-                  />
-
-                </a>
-                
-                <div className="mx-2">
-                  <a
-                    className="text-dark font-weight-600 text-sm"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    {pagename} {posts[0]?.created_time?.slice(0, 10)}
-                  </a>
-                {posts[0].full_picture === undefined ? "" :  <small className="d-block text-muted">{posts[0]?.message?.slice(0,255)}...</small> }
-                </div>
-              </div>
-              <div className="text-right ml-auto">
-            
-      
-                {/* <Button
-                    className="btn-icon"
-                    color="primary"
-                    size="sm"
-                    type="button"
-                  >
-                    <span className="btn-inner--icon mr-1">
-                      <i className="ni ni-fat-add" />
-                    </span>
-                    <span className="btn-inner--text">Follow</span>
-                  </Button> */}
-              </div>
-            </CardHeader>
-
-            <CardBody>
          
-           {posts[0].full_picture === undefined ?  <h5 className="d-block text-muted">{posts[0]?.message}</h5> : "" }
-           <p className="mb-0">
+          <Card>
 
-</p>
-                
+
+
+
+            
+        <div className="img-wrapper">
+        <div className={`avatar-top ${posts[0].full_picture ? "picturePresent" : "noPicture"}`}>
+            <a
+          className="avatar custom rounded-circle"
+          href="#pablo"
+          onClick={e => e.preventDefault()}
+        >
+         <div className="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
               
-              <img
-              
-                className="img-fluid rounded postImage"
-                src={(`${posts[0]?.full_picture}`)}
-              />
-              
-              <Row className="align-items-center my-3 pb-3 border-bottom">
-                
-                <Col sm="6">
-                  <div className="icon-actions">
+              <i className={posticon} /> 
+            </div>
+        </a>
+        </div>
+    
+    {posts[0].full_picture && (
+      <CardImg
+      alt="..."
+      src={posts[0].full_picture}
+      top
+    />
+    )}
+            </div>
+            <CardBody>
+              <CardTitle>
+                <div className="icon-actions">
                     <a
                       className="like active"
                       href="#pablo"
@@ -367,11 +352,18 @@ if (posts[0]?.icon?.includes('photo')) {
                       <i className="ni ni-curved-next" />
                       <span className="text-muted">{numeral(posts[0]?.shares?.count).format('0,0')}</span>
                     </a>
+
+
+
+                    
                   </div>
-                </Col>
-
-              </Row>
-
+                  
+              </CardTitle>
+              <div className="textWrapper">
+              <CardText>
+              {posts[7]?.message}
+              </CardText>
+              </div>
               <div className="mb-1">
                 <Media className="media-comment">
 
@@ -400,11 +392,16 @@ if (posts[0]?.icon?.includes('photo')) {
                           <span className="text-muted"></span>
                         </a>
                       </div>
+                      
                     </div>
                   </Media>
                 </Media>
               </div>
+              {/* <CardText>
+              <small className="text-muted">{posts[0]?.created_time}</small>
+              </CardText> */}
             </CardBody>
+            
           </Card>
 
 

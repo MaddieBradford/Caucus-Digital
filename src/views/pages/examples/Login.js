@@ -18,6 +18,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 // nodejs library that concatenates classes
 import classnames from "classnames";
+import ParticlesBg from 'particles-bg';
 
 // reactstrap components
 import {
@@ -54,18 +55,18 @@ function Login({ history }) {
       .then((userCredential) => {
 
         history.push('/Admin')
-      //   window.FB.login(function(response) {
+        window.FB.login(function(response) {
 
-      //     if (response.authResponse) {
-      //      window.FB.api('/me', function(response) {
-      //       history.push('/Admin')
+          if (response.authResponse) {
+           window.FB.api('/me', function(response) {
+            history.push('/Admin')
   
-      //      });
-      //     } else {
-      //      console.log('User cancelled login or did not fully authorize.');
-      //     }
+           });
+          } else {
+          // console.log('User cancelled login or did not fully authorize.');
+          }
   
-      // }, {scope: 'business_management, pages_messaging, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, business_management, ads_read'})
+      }, {scope: 'ads_management, pages_messaging, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, ads_read'})
   
 
 
@@ -89,11 +90,13 @@ function Login({ history }) {
 
   return (
     <>
+  
       <AuthHeader
         title="Welcome"
         lead="Securely sign in and authorise access to Facebook."
       />
-      <Container className="mt--8 pb-5">
+      <Container className="mt--9 pb-6">
+        
         <Row className="justify-content-center">
           <Col lg="5" md="7">
             <Card className="bg-secondary border-0 mb-0">
@@ -157,12 +160,12 @@ function Login({ history }) {
                       checked={formValues.remember || false}
                       onChange={handleCheckboxChange}
                     />
-                    <label
+                    {/* <label
                       className="custom-control-label"
                       htmlFor=" customCheckLogin"
                     >
                       <span className="text-muted">Remember me</span>
-                    </label>
+                    </label> */}
                   </div>
 
 
@@ -177,13 +180,13 @@ function Login({ history }) {
                       <span className="btn-inner--icon mr-1">
                         <i className="fab fa-facebook" />
                       </span>
-                      <span className="btn-inner--text">Facebook</span>
+                      <span className="btn-inner--text">Login with Facebook</span>
                     </Button>
                   </div>
                 </Form>
               </CardBody>
             </Card>
-            <Row className="mt-3">
+            {/* <Row className="mt-3">
               <Col xs="6">
                 <a
                   className="text-light"
@@ -202,10 +205,12 @@ function Login({ history }) {
                   <small>Create new account</small>
                 </a>
               </Col>
-            </Row>
+            </Row> */}
           </Col>
         </Row>
       </Container>
+      <ParticlesBg color="#CCCCCC" num={40} type="cobweb" rps="0.2" bg={true} />
+
     </>
   );
 }

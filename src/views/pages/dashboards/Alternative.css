@@ -3,5 +3,27 @@
 }
 
 .postImage{
-    height: 525px;
+    height: 470px;
+}
+
+.postImage2{
+    height: 300px;
+}
+
+.icon-actions{
+    margin-bottom: 10px; 
+}
+
+.img-wrapper{
+    max-height: 450px;
+    overflow: hidden;
+}
+
+.textWrapper{
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.textWrapper::-webkit-scrollbar{
+    display: none;
 }

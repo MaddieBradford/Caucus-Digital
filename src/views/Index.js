@@ -42,23 +42,13 @@ function Index() {
         <IndexHeader />
         <section className="py-6 pb-9 bg-default">
           <Container fluid>
-            <Row className="justify-content-center text-center">
+            <Row className="justify-content-center text-center"> 
               <Col md="6">
-                <h2 className="display-3 text-white">
-                  A complete React solution
-                </h2>
-                <p className="lead text-white">
-                  Argon is a completly new product built on our newest re-built
-                  from scratch framework structure that is meant to make our
-                  products more intuitive, more adaptive and, needless to say,
-                  so much easier to customize. Let Argon amaze you with its cool
-                  features and build tools and get your project to a whole new
-                  level.
-                </p>
+               
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> {/*
         <section className="section section-lg pt-lg-0 mt--7">
           <Container>
             <Row className="justify-content-center">
@@ -333,7 +323,7 @@ function Index() {
             </div>
           </Container>
         </section>
-        <section className="py-7">
+        <section className="py-7"> 
           <Container>
             <Row className="row-grid justify-content-center">
               <Col className="text-center" lg="8">
@@ -520,7 +510,7 @@ function Index() {
             </Row>
           </Container>
         </section>
-      </div>
+      */} </div>
       <AuthFooter />
     </>
   );

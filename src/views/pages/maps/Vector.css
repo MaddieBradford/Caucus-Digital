@@ -1,0 +1,33 @@
+.avatar-top.picturePresent{
+    position: absolute;
+    top: 15px;
+    left: 16px;
+}
+
+.avatar-top.noPicture{
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    
+}
+
+.avatar-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 30px);
+}
+
+.avatar.custom{
+    box-shadow: 0px 0px 15px -3px #FFFFFF;
+}
+
+.custom-card-title{
+    font-weight: 700;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+.card-date{
+    font-size: 12px;
+}

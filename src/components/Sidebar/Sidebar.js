@@ -37,6 +37,7 @@ function Sidebar({ toggleSidenav, sidenavOpen, routes, logo, rtlActive }) {
   const [state, setState] = React.useState({});
   const location = useLocation();
   React.useEffect(() => {
+    console.log("useEffect 3")
     setState(getCollapseStates(routes));
     // eslint-disable-next-line
   }, []);
@@ -206,49 +207,31 @@ function Sidebar({ toggleSidenav, sidenavOpen, routes, logo, rtlActive }) {
         <Collapse navbar isOpen={true}>
           <Nav navbar>{createLinks(routes)}</Nav>
           <hr className="my-3" />
-          <h6 className="navbar-heading p-0 text-muted">
-            <span className="docs-normal">Caucus Digital</span>
-            <span className="docs-mini">D</span>
-          </h6>
-          <Nav className="mb-md-3" navbar>
+          {/* <Nav className="mb-md-3" navbar>
+            <NavItem>
+              <NavLink
+                href=".../src/views/pages/components/typography"
+                target="_blank"
+              >
+                 <i className="ni ni-ui-04" />
+                <span className="nav-link-text">Graphics Editor</span> 
+              </NavLink>
+            </NavItem>
             <NavItem>
               <NavLink
                 href="https://demos.creative-tim.com/argon-dashboard-pro-react/#/documentation/overview?ref=adpr-sidebar"
                 target="_blank"
               >
-                {/* <i className="ni ni-ui-04" />
-                <span className="nav-link-text">Contact</span> */}
+                 <i className="ni ni-ui-04" />
+                <span className="nav-link-text">Graphics Editor</span> 
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink
-                href="https://demos.creative-tim.com/argon-dashboard-pro-react/#/documentation/colors?ref=adpr-sidebar"
-                target="_blank"
-              >
-                
-                <span className="nav-link-text"></span>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                href="https://demos.creative-tim.com/argon-dashboard-pro-react/#/documentation/alert?ref=adpr-sidebar"
-                target="_blank"
-              >
-              
-                <span className="nav-link-text"></span>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                href="https://demos.creative-tim.com/argon-dashboard-pro-react/#/documentation/charts?ref=adpr-sidebar"
-                target="_blank"
-              >
-                
-                <span className="nav-link-text"></span>
-              </NavLink>
-            </NavItem>
-          </Nav>
+          </Nav> */}
         </Collapse>
+        <h6 className="navbar-heading p-0 text-muted">
+            <span className="docs-normal">Caucus Digital</span>
+            <span className="docs-mini">D</span>
+          </h6>
       </div>
     </div>
   );

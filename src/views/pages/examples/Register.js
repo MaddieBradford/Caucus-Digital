@@ -30,6 +30,8 @@ import classnames from "classnames";
 // import "firebase/auth";
 // import "firebase/firestore";
 // reactstrap components
+// 1 sec
+// import {promisify} from 'util';
 
 import {
   Button,
@@ -59,7 +61,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import routes from "routes.js";
 //import { useLocation, Route, Switch, Redirect, useHistory } from "react-router-dom";
 
-
+const { FB } = require('fb');
 const firebase = window.firebase;
 const db = firebase.firestore();
 
@@ -76,13 +78,13 @@ const db = firebase.firestore();
   db = firebase.firestore();
 }*/
 
+// const fbPromises = {};
+// Object.entries(window.FB).forEach(([k,v]) => {
+//   if (typeof v === 'function') fbPromises[k] = promisify(v)
+// });
 
 
-
-function Register({history}, props) {
-
-
-
+function Register({ history }, props) {
 
   // Add a new document in collection "cities" with ID 'LA'
 
@@ -90,7 +92,7 @@ function Register({history}, props) {
   const [focusedEmail, setfocusedEmail] = React.useState(false);
   const [focusedPassword, setfocusedPassword] = React.useState(false);
   const [formValues, setFormValues] = React.useState({});
-  const [useremail, setUserEmail] = React.useState({});
+  const [useremail, setUserEmail] = React.useState(null);
   const [userpassword, setUserPassword] = React.useState({});
   const [accountslist, setAccountsList] = useState([]);
   const [defaultModal, setdefaultModal] = React.useState(false);
@@ -100,79 +102,185 @@ function Register({history}, props) {
   const [Page_Access_Token, setPage_Access_Token] = useState([]);
   const firebase = window.firebase;
   const db = firebase.firestore();
-
+  var moment = require('moment');
+  var previousweek = moment().subtract('days', 7).format('MM/DD/YYYY')
+  let newDate = new Date()
 
   const Signup = e => {
     e.preventDefault();
     const { email, password } = formValues;
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then(() => {
         setUserEmail(email);
         setUserPassword(password);
-        //Signed in 
+        console.log('Registration: User Has Signed Into Firebase, Attempting Facebook Authentication');
         FacebookAuthenticate();
-      }
-
-
-
-    
-      )}
-
-  function FacebookAuthenticate(history) {
-
-    window.FB.login(function (response) {
-      if (response.authResponse) {
-        window.FB.api('/me', function (response) {
-          //history.push('/Admin')
-         
-          window.FB.getLoginStatus(function (response) {
-            setUser_Access_Token(response.authResponse.accessToken)
-            if (response.status === 'connected') {
-            }
-            { setformModal(true) }
-            window.FB.api(
-              `me/accounts`,
-              'GET',
-              { User_Access_Token: User_Access_Token },
-              function (response) {
-                
-                setAccountsList(response.data)
-              { setformModal(true) }
-              });
-          });
-
-        });
-      } else {
-        console.log('User cancelled login or did not fully authorize.');
-        //history.push('/auth/register')
-      }
-
-    }, { scope: 'business_management, email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, business_management, ads_read' })
+      })
   }
 
-  const SetAccessToken = account => {
-    db.collection("Users").doc(`${useremail}`).set({
+  async function FacebookAuthenticate(isMounted) {
+    window.FB.login(async function (response) {
+      if (response.authResponse) {
+        const { accessToken, userID } = response.authResponse;
+        const auth = (await db.collection('AuthSettings').doc('auth').get()).data();
+        const appId = auth['app-id'];
+        const appSecret = auth['app-secret'];
+        try {
+          const resp = await FB.api(
+            `oauth/access_token?grant_type=fb_exchange_token&client_id=${appId}&client_secret=${appSecret}&fb_exchange_token=${accessToken}`,
+            'GET')
+            console.log("respiii",resp);
+          const { access_token } = resp;
+          
+          setUser_Access_Token(access_token);
+          const accountsResp = await FB.api(`${userID}/accounts?access_token=${access_token}"`, 'GET');
+          setAccountsList(JSON.parse(JSON.stringify(accountsResp.data)));
+          setformModal(true);
+        } catch (err) {
+          console.log('Registration: Facebook Authentication Error', err);
+        }
+      } else {
+        console.log('Registration: User did not fully authorize access.');
+        history.push('/auth/register')
+      }
+
+    }, { scope: 'email, pages_manage_cta, pages_manage_posts, pages_read_user_content, pages_show_list, public_profile, pages_manage_engagement, pages_read_engagement, read_insights, pages_manage_ads, ads_read' })
+  }
+
+  const SetAccessToken = async account => {
+    await db.collection("Users").doc(useremail).set({
       Page_Token: account.access_token,
       Page_ID: account.id,
+      Page_Name: account.name,
       User_Token: User_Access_Token,
       Email: useremail,
-      Password: userpassword,
-      
-      
-  })
-  history.push('/Admin');
-    
+    });
+    console.log('Registration: User Profile Established');
+
+    const newPageName = account.name;
+    const PageID = account.id;
+    const Page_Access_Token = account.access_token;
+
+
+    let response = await FB.api(`${PageID}/insights/page_fans_online`, 'GET', { access_token: Page_Access_Token });
+    const values = Object.values(response?.data[0]?.values[1]?.value);
+    const myVal = values.indexOf(Math.max(...values))
+    var arr = values;
+    var max = Math.max.apply(null, arr); // get the max of the array
+    arr.splice(arr.indexOf(max), 1); // remove max from the array
+    const secondVal = Math.max.apply(null, arr)
+    const secondValIndex = values.indexOf(secondVal)
+    let fansOnline;
+    if (myVal < 10) {
+      fansOnline = '0' + myVal;
+    } else {
+      fansOnline = myVal;
+    }
+    let fansOnline2;
+    if (secondValIndex < 10) {
+      fansOnline2 = '0' + secondValIndex
+    } else {
+      fansOnline2 = myVal;
+    }
+
+    let Engagement = await FB.api(`${PageID}/insights/page_post_engagements,page_fan_adds_unique?date_preset=last_7d`, 'GET', { access_token: Page_Access_Token }); Engagement = Engagement?.data;
+    let newFollowers = await FB.api(`${PageID}/?fields=fan_count`, 'GET', { access_token: Page_Access_Token }); newFollowers = newFollowers?.fan_count;
+    let oldPageFans = await FB.api(`${PageID}/insights/page_fan_adds_unique?date_preset=last_7d`, 'GET', { access_token: Page_Access_Token }); oldPageFans = oldPageFans?.data;
+    let response5 = await FB.api(`${PageID}/posts?fields=insights.metric(post_impressions_unique, post_clicks_unique)&limit=40`, 'GET', { access_token: Page_Access_Token });
+
+    const postReach = response5.data.map(t => t?.insights?.data[0]?.values[0]?.value);
+    const postEngagement = response5.data.map(t => t?.insights?.data[1]?.values[0]?.value);
+    const avePostReach = postReach.reduce((a, b) => a + b) / response5?.data?.length;
+    const avePostEngagement = postEngagement.reduce((a, b) => a + b) / response5?.data?.length;
+
+    let fourteenReach = await FB.api(`${PageID}/insights/page_posts_impressions_unique?&date_preset=last_30d`, 'GET', { access_token: Page_Access_Token }); fourteenReach = fourteenReach?.data[0].values;
+    let impress6 = await FB.api(`${PageID}/insights/page_posts_impressions_organic_unique?total_count&since=${previousweek}`, 'GET', { access_token: Page_Access_Token }); impress6 = impress6?.data;
+    let pageimage2 = await FB.api(`${PageID}/picture?redirect=false`, 'GET', { access_token: Page_Access_Token }); pageimage2 = pageimage2?.data;
+    let impress9 = await FB.api(`${PageID}/insights/page_fans_gender_age`, 'GET', { access_token: Page_Access_Token }); impress9 = impress9?.data[0]?.values[1]?.value;
+    let impress99 = await FB.api(`${PageID}/published_posts?summary=total_count&since=${previousweek}`, 'GET', { access_token: Page_Access_Token }); impress99 = response;
+
+    db.collection("Pages").doc(newPageName).set({
+      PostsWeek: impress99.summary?.total_count || 0,
+      FanDemographics: impress9 || {},
+      fourteenReach: fourteenReach || [],
+      Engagement_Today: Engagement[0]?.values[6]?.value || 0,
+      Engagement_7days: Engagement[0]?.values[0]?.value || 0,
+      Reach: impress6[1]?.values[3]?.value || 0,
+      OldReach: impress6[1]?.values[0]?.value || 0,
+      Fans_Today: Engagement[1]?.values[6]?.value || 0,
+      Fans_7days: Engagement[1]?.values[0]?.value || 0,
+      Followers: newFollowers || 0,
+      AveragePostReach: avePostReach || 0,
+      AverageEngagement: avePostEngagement || 0,
+      FansOnline1: fansOnline || 0,
+      FansOnline2: fansOnline2 || 0,
+      PageImage: pageimage2?.url || '',
+      PageName: newPageName || '',
+      Page_Access_Token: Page_Access_Token || '',
+      Party: "Labor",
+      PageID: PageID || '',
+    }, { merge: true });
+    console.log('Registration: Page Fully Created');
+
+    window.FB.api(
+      `${account.id}/posts?fields=id,permalink_url,message,message_tags,created_time,admin_creator,from,full_picture,icon,shares,comments.limit(20).summary(total_count){message,id,like_count},insights.metric(post_impressions_unique,post_engaged_users,post_reactions_by_type_total),reactions.summary(total_count)&limit=20`, 'GET', { access_token: account.access_token },
+
+      async function (response) {
+        const Posts = response?.data
+        await Promise.allSettled(Posts.map(async post => {
+          const PostsRef = db.collection("Page_Posts").doc(account.name).collection('Posts');
+          const PostDoc = await db.collection("Pages").doc(account.name).get();
+          const doc = await PostsRef.where('id', '==', post.id).get();
+
+          if (!doc.docs.length) {
+            const PagePost = await db.collection("Page_Posts").doc(account.name).get();
+            if (!PagePost.exists) {
+              await db.collection("Page_Posts").doc(account.name).set({
+                accountName: account.name
+              }, { merge: true })
+            }
+
+            return PostsRef.add({
+              id: post?.id || '',
+              fullpicture: post?.full_picture || '',
+              PageImage: PostDoc.data()?.PageImage || '',
+              reactiontypes: Object.entries(post?.insights?.data[2]?.values[0].value).map(([k, v]) => ({ label: k, value: v })),
+              //reachstamp: post?.insights?.data[0]?.values[0]?.value || [],
+              icon: post?.icon || '',
+              pagename: account.name || '',
+              PageAccessToken: Page_Access_Token || '',
+              created_time: post?.created_time || '',
+              admin_creator: post?.admin_creator?.name || '',
+              reactions: post?.reactions?.summary?.total_count || 0,
+              shares: post?.shares?.count || 0,
+              allcomments: post?.comments?.data.map(comment => encodeURI(comment.message)) || [],
+              taggedprofiles: post?.message_tags?.map(tagged => tagged.name) || [],
+              comments: post?.comments?.summary?.total_count || 0,
+              topcomment: encodeURI(post?.comments?.data[0]?.message) || '',
+              topcommentlikes: post?.comments?.data[0]?.like_count || '',
+              topcommentreplies: post?.comments?.data[0]?.comment_count || '',
+              postreach: post?.insights?.data[0]?.values[0]?.value || 0,
+              postengagement: post?.insights?.data[1]?.values[0]?.value || 0,
+              postreach: post?.insights?.data[0]?.values[0]?.value || 0,
+              postengagement: post?.insights?.data[1]?.values[0]?.value || 0,
+              message: encodeURI(post?.message) || '',
+              url: post?.permalink_url || '',
+              Party: PostDoc.data()?.Party || ''
+
+            })
+          }
+        }));
+        setformModal(false);
+        console.log('Registration: Complete - Loading Dashboard');
+        history.push('/Admin')
+      });
   }
 
-  
-  
-
   const handleInputChange = e => setFormValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
-
   const handleCheckBoxChange = e => setFormValues(prev => ({ ...prev, [e.target.name]: e.target.checked }));
 
-
   return (
+    
     <>
       <AuthHeader
         title="Create an account"
@@ -295,42 +403,46 @@ function Register({history}, props) {
                   </Row>
                   <div className="text-center">
                     <Button className="mt-4" color="info" type="submit">
-                      Create account
+
+                      <span className="btn-inner--icon mr-1">
+                        <i className="fab fa-facebook" />
+                      </span>
+                      <span className="btn-inner--text">Register with Facebook</span>
                     </Button>
 
                     <Modal
-                    className="modal-dialog-centered"
-                    size="sm"
-                    isOpen={formModal}
-                    toggle={() => setformModal(true)}
-                  >
-                    <div className="modal-body p-0">
-                      <Card className="bg-secondary border-0 mb-0">
-                        <CardHeader className="bg-transparent pb-5">
-                          <div className="h2 font-weight-bold text-center mt-1 mb-0 ">
-                            <small>Select Your Primary Page</small>
-                          </div>
-                          <div className="btn-wrapper text-center">
+                      className="modal-dialog-centered"
+                      size="sm"
+                      isOpen={formModal}
+                      toggle={() => setformModal(prev => !prev)}
+                    >
+                      <div className="modal-body p-0">
+                        <Card className="bg-secondary border-0 mb-0">
+                          <CardHeader className="bg-transparent">
+                            <div className="h2 font-weight-bold text-center mt-1 mb-0 ">
+                              <small>Select Your Primary Page</small>
+                            </div>
+                            <div className="btn-wrapper text-center">
 
-                            <CardBody>
-                              <div
-                                className="timeline timeline-one-side"
-                                data-timeline-axis-style="dashed"
-                                data-timeline-content="axis"
-                              >
-{accountslist.map(account => (
-<Card className="bg-gradient-primary">
-<CardBody>
-  <Row>
-    <div onClick={() => SetAccessToken(account)} className="col">
-      <CardTitle className="text-uppercase text-muted mb-0 text-white">
-      
-      </CardTitle>
-      <span className="h2 font-weight-bold mb-0 text-white">
-      {account.name}
-      </span>
-    </div>
-    {/* <Col className="col-auto">
+                              <CardBody>
+                                <div
+                                  className="timeline timeline-one-side"
+                                  data-timeline-axis-style="dashed"
+                                  data-timeline-content="axis"
+                                >
+                                  {accountslist.map(account => (
+                                    <Card className="bg-gradient-primary">
+                                      <CardBody>
+                                        <Row>
+                                          <div onClick={() => SetAccessToken(account)} className="col">
+                                            <CardTitle className="text-uppercase text-muted mb-0 text-white">
+
+                                            </CardTitle>
+                                            <span className="h2 font-weight-bold mb-0 text-white">
+                                              {account.name}
+                                            </span>
+                                          </div>
+                                          {/* <Col className="col-auto">
     <a
                          className="avatar rounded-circle"
                          href="#pablo"
@@ -342,23 +454,23 @@ function Register({history}, props) {
                          />
                        </a>
     </Col> */}
-  </Row>
-  <p className="mt-3 mb-0 text-sm">
-    <span className="text-nowrap text-light">
-    {account.category}
-    </span>
-  </p>
-</CardBody>
-</Card>
-                  
-                                
-                                
+                                        </Row>
+                                        <p className="mt-3 mb-0 text-sm">
+                                          <span className="text-nowrap text-light">
+                                            {account.category}
+                                          </span>
+                                        </p>
+                                      </CardBody>
+                                    </Card>
 
 
-                                  
-                                ))}
 
-                                {/*<div className="timeline-block">
+
+
+
+                                  ))}
+
+                                  {/*<div className="timeline-block">
                                   <span className="timeline-step badge-success">
                                     <i className="ni ni-bell-55" />
                                   </span>
@@ -377,13 +489,13 @@ function Register({history}, props) {
                       </h6>
                                   </div>
                                 </div>*/}
-                              </div>
-                            </CardBody>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                    </div>
-                  </Modal>
+                                </div>
+                              </CardBody>
+                            </div>
+                          </CardHeader>
+                        </Card>
+                      </div>
+                    </Modal>
 
 
                   </div>

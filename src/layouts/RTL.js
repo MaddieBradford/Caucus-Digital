@@ -29,6 +29,7 @@ function RTL() {
   const location = useLocation();
   const mainContentRef = React.useRef(null);
   React.useEffect(() => {
+    console.log("useEffect 9")
     document.body.classList.add("rtl");
     document.documentElement.classList.add("rtl");
     // Specify how to clean up after this effect:
@@ -38,6 +39,7 @@ function RTL() {
     };
   });
   React.useEffect(() => {
+    console.log("useEffect 10")
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContentRef.current.scrollTop = 0;

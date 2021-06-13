@@ -28,6 +28,7 @@ function Auth() {
   const location = useLocation();
   const mainContentRef = React.useRef(null);
   React.useEffect(() => {
+    console.log("useEffect 7")
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContentRef.current.scrollTop = 0;
@@ -38,6 +39,7 @@ function Auth() {
     };
   });
   React.useEffect(() => {
+    console.log("useEffect 8")
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContentRef.current.scrollTop = 0;

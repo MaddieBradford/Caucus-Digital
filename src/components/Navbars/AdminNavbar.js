@@ -52,47 +52,48 @@ function AdminNavbar({ theme, sidenavOpen, toggleSidenav }) {
   const firebase = window.firebase;
   const db = firebase.firestore();
   useEffect(() => {
-   // if (typeof (FB) !== 'undefined') {
+    console.log("useEffect 2")
+   if (typeof (FB) !== 'undefined') {
        window.FB.api(
       '/me',
       'GET',
       {"fields":"first_name,picture,accounts"},
       function(response) {
-        console.log('dfdfdfdfdfdfdf', response.accounts.data)
+
         setData(response);
         setAccountsList(response.accounts.data);
         
       }
     );
-   // }
+   }
   }, [])
 
   // function that on mobile devices makes the search open
-  const openSearch = () => {
-    document.body.classList.add("g-navbar-search-showing");
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-showing");
-      document.body.classList.add("g-navbar-search-show");
-    }, 150);
-    setTimeout(function () {
-      document.body.classList.add("g-navbar-search-shown");
-    }, 300);
-  };
-  // function that on mobile devices makes the search close
-  const closeSearch = () => {
-    document.body.classList.remove("g-navbar-search-shown");
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-show");
-      document.body.classList.add("g-navbar-search-hiding");
-    }, 150);
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-hiding");
-      document.body.classList.add("g-navbar-search-hidden");
-    }, 300);
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-hidden");
-    }, 500);
-  };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
   const logout = () => {
@@ -117,42 +118,43 @@ const useremail = user?.providerData[0]?.email;
 
   return (
     <>
-      <Navbar
+      {/*  <Navbar
+     
         className={classnames(
-          "navbar-top navbar-expand border-bottom",
-          { "navbar-dark bg-info": theme === "dark" },
+          "navbar-top navbar-expand",
+          
           { "navbar-light bg-secondary": theme === "light" }
         )}
       >
         <Container fluid>
-          <Collapse navbar isOpen={true}>
-            <Form
-              className={classnames(
-                "navbar-search form-inline mr-sm-3",
-                { "navbar-search-light": theme === "dark" },
-                { "navbar-search-dark": theme === "light" }
-              )}
-            >
-              <FormGroup className="mb-0">
-                <InputGroup className="input-group-alternative input-group-merge">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="fas fa-search" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input placeholder="Search" type="text" />
-                </InputGroup>
-              </FormGroup>
-              <button
-                aria-label="Close"
-                className="close"
-                type="button"
-                onClick={closeSearch}
-              >
-                <span aria-hidden={true}>×</span>
-              </button>
-            </Form>
-
+         <Collapse navbar isOpen={true}>
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+          
+          
+          
+          
+          
+          
+           
+           
+           
+ 
             <Nav className="align-items-center ml-md-auto" navbar>
               <NavItem className="d-xl-none">
                 <div
@@ -170,11 +172,11 @@ const useremail = user?.providerData[0]?.email;
                   </div>
                 </div>
               </NavItem>
-              <NavItem className="d-sm-none">
-                <NavLink onClick={openSearch}>
-                  <i className="ni ni-zoom-split-in" />
-                </NavLink>
-              </NavItem>
+              
+              
+              
+              
+              
               <UncontrolledDropdown nav>
                 <DropdownToggle className="nav-link" color="" tag="a">
                   <i className="ni ni-bell-55" />
@@ -435,8 +437,9 @@ const useremail = user?.providerData[0]?.email;
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
+         
         </Container>
-      </Navbar>
+      </Navbar> */}
     </>
   );
 }

@@ -47,7 +47,7 @@ ReactDOM.render(
       <Route path="/register" render={(props) => <AuthLayout {...props} testProp2={"testprop2"} />} />
       <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
       <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-      <Route path="/" render={(props) => <IndexView {...props} />} />
+      <Route path="/" render={(props) => <AdminLayout {...props} testProp={"testprop"} />} /*render={(props) => <IndexView {...props} />}*/ />
       <Redirect from="*" to="/" />
     </Switch>
   </BrowserRouter>,

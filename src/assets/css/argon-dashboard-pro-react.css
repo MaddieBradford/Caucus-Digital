@@ -1146,8 +1146,8 @@ html.rtl {
     float: right !important; }
 
 :root {
-  --blue: #5e72e4;
-  --indigo: #5603ad;
+  --blue: #1294ef;
+  --indigo: #223b63;
   --purple: #8965e0;
   --pink: #f3a4b5;
   --red: #f5365c;
@@ -1171,7 +1171,7 @@ html.rtl {
   --dark: #212529;
   --default: #172b4d;
   --white: #fff;
-  --neutral: #fff;
+  --neutral: #f6f7f9;
   --darker: black;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
